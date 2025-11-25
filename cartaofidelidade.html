@@ -76,7 +76,7 @@
         if (!res.ok) { msg.textContent = j.error || 'Erro no login'; return; }
         // salvar userId e redirecionar para perfil
         localStorage.setItem('userId', j.userId);
-        window.location.href = 'perfil (2).html';
+        window.location.href = 'perfil.html';
       } catch (err) {
         console.error(err);
         msg.textContent = 'Erro ao conectar ao servidor.';
