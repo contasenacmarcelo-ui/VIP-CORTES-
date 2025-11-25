@@ -57,9 +57,16 @@
   },
   {
     "id": 9,
-    "name": "PontoTeste",
-    "email": "ponto.teste@example.com",
-    "password": "$2a$10$TZ7m5rK48NfqEKgwryNEZeAkTSZo90Og4Z/NrNGLXbsHcoT6UKKrm",
-    "phone": "1199"
+    "name": "Marco tulio",
+    "email": "689467596@gmail.com",
+    "password": "$2a$10$Ra/S9veyLmimwtClhX.Sye9h/B5fz7Ze4Xuv3QFoG.oRDquDMC6O6",
+    "phone": "llçiyp79p"
+  },
+  {
+    "id": 10,
+    "name": "Marco tulio",
+    "email": "689467596@gmail.com",
+    "password": "$2a$10$Kq.oJK95GEKLD2t/.EhvQ.WPA.1r85maaIEfY5uOodYn2E4awIg/C",
+    "phone": "86867788"
   }
 ]
