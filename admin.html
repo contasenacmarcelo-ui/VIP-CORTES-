@@ -97,6 +97,23 @@
             carregarAgendamentos();
           });
 
+          const remarcarBtn = document.createElement('button'); remarcarBtn.className = 'btn-remarcar'; remarcarBtn.textContent = 'Remarcar';
+          remarcarBtn.addEventListener('click', () => {
+            window.location.href = './AGENDAR.html';
+          });
+
+          const cancelarBtn = document.createElement('button'); cancelarBtn.className = 'btn-cancelar'; cancelarBtn.textContent = 'Cancelar';
+          cancelarBtn.addEventListener('click', async () => {
+            if (!confirm(`Cancelar agendamento de ${a.name || 'Cliente'} ?`)) return;
+            const r = await fetch(`/api/agendamentos/${a.id}`, { method: 'DELETE' });
+            if (r.ok) {
+              alert('Agendamento cancelado com sucesso');
+              carregarAgendamentos();
+            } else {
+              alert('Erro ao cancelar agendamento');
+            }
+          });
+
           const addBtn = document.createElement('button'); addBtn.className = 'btn-adicionar'; addBtn.textContent = 'Adicionar Pontos';
           addBtn.addEventListener('click', async () => {
             // prompt para usuário inserir email ou userId e quantidade de pontos
@@ -114,6 +131,10 @@
           });
 
           actionTd.appendChild(delBtn);
+          actionTd.appendChild(document.createTextNode(' '));
+          actionTd.appendChild(remarcarBtn);
+          actionTd.appendChild(document.createTextNode(' '));
+          actionTd.appendChild(cancelarBtn);
           actionTd.appendChild(document.createTextNode(' '));
           actionTd.appendChild(addBtn);
 
