@@ -54,5 +54,12 @@
     "email": "12132321@gmail.com",
     "password": "$2a$10$.d63kYjDOr7RH6v6PYe0COqH3kVdNSscmNQd06RwUgKOERTYCB9iq",
     "phone": "321312313123133"
+  },
+  {
+    "id": 9,
+    "name": "PontoTeste",
+    "email": "ponto.teste@example.com",
+    "password": "$2a$10$TZ7m5rK48NfqEKgwryNEZeAkTSZo90Og4Z/NrNGLXbsHcoT6UKKrm",
+    "phone": "1199"
   }
 ]

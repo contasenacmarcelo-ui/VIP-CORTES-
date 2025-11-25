@@ -141,6 +141,54 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Obter dados do usuário por id (usado por perfil.html)
+app.get('/api/usuarios/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (db) {
+      // buscar usuário via Sequelize
+      const user = await Usuario.findByPk(id, { attributes: ['id', 'name', 'phone', 'email'] });
+      let pontos = 0;
+      if (user) {
+        // tentar obter pontos de fidelidade no DB
+        try {
+          const f = await Fidelidade.findOne({ where: { usuario_id: id } });
+          if (f) pontos = f.pontos || 0;
+        } catch (e) {
+          // ignore
+        }
+        return res.json({ usuario: { id: user.id, nome: user.name, telefone: user.phone, email: user.email, pontos } });
+      }
+      // se não encontrou no DB, continuar para fallback local JSON
+    }
+
+    // fallback local JSON
+    let usersContent = '[]';
+    try { usersContent = await fs.readFile(USERS_FILE, 'utf8'); } catch (e) {}
+    const usersArr = JSON.parse(usersContent || '[]');
+    const u = usersArr.find(x => String(x.id) === String(id));
+    if (!u) return res.status(404).json({ error: 'Usuário não encontrado' });
+
+    // ler pontos de fidelidade local
+    let pontos = 0;
+    try {
+      const fidPath = path.join(DATA_DIR, 'fidelidades.json');
+      let fidContent = '[]';
+      try { fidContent = await fs.readFile(fidPath, 'utf8'); } catch (e) {}
+      const farr = JSON.parse(fidContent || '[]');
+      const f = farr.find(x => String(x.usuario_id) === String(id));
+      if (f) pontos = f.pontos || 0;
+    } catch (e) {
+      // ignore
+    }
+
+    return res.json({ usuario: { id: u.id, nome: u.name || u.nome || '', telefone: u.phone || u.telefone || '', email: u.email || '', pontos } });
+  } catch (err) {
+    console.error('Erro ao obter usuário:', err);
+    res.status(500).json({ error: 'Erro ao obter dados do usuário' });
+  }
+});
+
 // Criar agendamento
 app.post('/api/agendamentos', async (req, res) => {
   try {

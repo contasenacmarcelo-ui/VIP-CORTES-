@@ -4,5 +4,17 @@
     "usuario_id": 9999,
     "pontos": 5,
     "status": "ativo"
+  },
+  {
+    "id": 2,
+    "usuario_id": 6,
+    "pontos": 25,
+    "status": "ativo"
+  },
+  {
+    "id": 3,
+    "usuario_id": 9,
+    "pontos": 25,
+    "status": "ativo"
   }
 ]

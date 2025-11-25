@@ -630,7 +630,7 @@
                     </div>
                     <div class="action-buttons">
                         <button class="btn btn-reschedule" onclick="window.location.href='./AGENDAR.html'">Remarcar</button>
-                        <button class="btn btn-cancel" onclick="alert('Cancelamento em desenvolvimento')">Cancelar</button>
+                        <button class="btn btn-cancel" id="btnCancelService" style="opacity:0.6; cursor:not-allowed;" disabled title="Cancelamento em desenvolvimento">Cancelar</button>
                     </div>
                 `;
                 
@@ -680,10 +680,11 @@
             return str.replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[s]);
         }
 
-        // Função para carregar dados do usuário (apenas via servidor ou sessionStorage)
+        // Função para carregar dados do usuário (usa localStorage/sessionStorage e servidor)
         async function carregarDadosUsuario() {
-            const usuarioId = sessionStorage.getItem('usuarioId');
-            const usuarioNome = sessionStorage.getItem('usuarioNome');
+            // aceitar tanto localStorage (onde signup/login gravam) quanto sessionStorage
+            const usuarioId = localStorage.getItem('userId') || sessionStorage.getItem('usuarioId');
+            const usuarioNome = localStorage.getItem('userName') || sessionStorage.getItem('usuarioNome');
 
             if (!usuarioId) {
                 document.getElementById('pageTitle').textContent = 'Acesso Restrito';
@@ -693,15 +694,15 @@
             }
 
             // Usar dados em cache (sessionStorage) se disponíveis
-            const dadosSessao = sessionStorage.getItem('usuarioDados');
+            const dadosSessao = sessionStorage.getItem('usuarioDados') || localStorage.getItem('usuarioDados');
             if (dadosSessao) {
                 try {
                     const usuario = JSON.parse(dadosSessao);
                     atualizarPerfil(usuario);
-                    console.log('✓ Dados carregados de sessionStorage');
+                    console.log('✓ Dados carregados de sessionStorage/localStorage');
                     return;
                 } catch (e) {
-                    console.error('Erro ao parsear sessionStorage:', e);
+                    console.error('Erro ao parsear armazenamento local:', e);
                 }
             }
 
@@ -712,7 +713,9 @@
                     const data = await response.json();
                     if (data.usuario) {
                         atualizarPerfil(data.usuario);
-                        sessionStorage.setItem('usuarioDados', JSON.stringify(data.usuario));
+                        // armazenar para cache
+                        try { sessionStorage.setItem('usuarioDados', JSON.stringify(data.usuario)); } catch(e){}
+                        try { localStorage.setItem('usuarioDados', JSON.stringify(data.usuario)); } catch(e){}
                         console.log('✓ Dados carregados do servidor');
                         return;
                     }
@@ -724,11 +727,11 @@
                 console.error('Erro ao buscar dados do servidor:', error);
             }
 
-            // Se tudo falhar, usar apenas os dados básicos da sessão
+            // Se tudo falhar, usar apenas os dados básicos da sessão/localStorage
             atualizarPerfil({
                 id: usuarioId,
                 nome: usuarioNome || 'Usuário',
-                telefone: sessionStorage.getItem('usuarioTelefone') || '-'
+                telefone: localStorage.getItem('userPhone') || sessionStorage.getItem('usuarioTelefone') || '-'
             });
         }
 
@@ -748,44 +751,41 @@
 
         // Verificar autenticação ao carregar a página
         window.addEventListener('load', () => {
-            const autenticado = sessionStorage.getItem('autenticado');
-            const usuarioId = sessionStorage.getItem('usuarioId');
-            
-            if (!autenticado || !usuarioId) {
-                // Usuário não autenticado - redirecionar para login
-                alert('Você precisa fazer login para acessar o perfil!');
-                window.location.href = './cartaofidelidade.html';
+            // aceitar tanto localStorage quanto sessionStorage
+            const usuarioId = localStorage.getItem('userId') || sessionStorage.getItem('usuarioId');
+
+            if (!usuarioId) {
+                document.getElementById('pageTitle').textContent = 'Acesso Restrito';
+                document.getElementById('nomeUsuario').classList.add('empty');
+                document.getElementById('nomeUsuario').textContent = 'Faça login para ver seu perfil';
+                // Redirect to login after 2 seconds
+                setTimeout(() => { window.location.href = './cartaofidelidade.html'; }, 2000);
                 return;
             }
-            
+
             // Usuário autenticado - carregar dados
             carregarDadosUsuario();
-            
+
             // Carregar agendamentos do usuário
-            const usuarioId = sessionStorage.getItem('usuarioId');
-            if (usuarioId) {
-                carregarAgendamentosUsuario(usuarioId);
-            }
+            if (usuarioId) carregarAgendamentosUsuario(usuarioId);
         });
 
         // Event listeners dos botões
-        document.getElementById('btnReschedule').addEventListener('click', () => {
-            window.location.href = './AGENDAR.html';
-        });
+        const btnReschedule = document.getElementById('btnReschedule');
+        if (btnReschedule) btnReschedule.addEventListener('click', () => { window.location.href = './AGENDAR.html'; });
 
-        document.getElementById('btnCancel').addEventListener('click', () => {
-            if (confirm('Tem certeza que deseja cancelar o serviço?')) {
-                alert('Serviço cancelado com sucesso!');
-                document.getElementById('serviceCard').innerHTML = '<div class="service-empty">Nenhum serviço agendado</div>';
-            }
+        const btnCancel = document.getElementById('btnCancel');
+        if (btnCancel) btnCancel.addEventListener('click', () => {
+            console.log('Cancelamento de serviço ainda não implementado');
+            // Função será implementada quando backend suportar cancelamento
         });
 
         // Debug: Mostrar dados no console
         console.log('=== VIP CORTES - PERFIL ===');
-        console.log('sessionStorage:', {
-            usuarioId: sessionStorage.getItem('usuarioId'),
-            usuarioNome: sessionStorage.getItem('usuarioNome'),
-            usuarioDados: sessionStorage.getItem('usuarioDados')
+        console.log('storage:', {
+            local_userId: localStorage.getItem('userId'),
+            session_usuarioId: sessionStorage.getItem('usuarioId'),
+            usuarioDados: sessionStorage.getItem('usuarioDados') || localStorage.getItem('usuarioDados')
         });
     </script>
 </body>
