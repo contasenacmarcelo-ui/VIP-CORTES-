@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 import fs from 'fs/promises';
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // ----------- Middleware -----------
 app.use(cors());
@@ -39,26 +39,32 @@ const REVIEWS_FILE = path.join(DATA_DIR, 'reviews.json');
 const AGENDAMENTOS_FILE = path.join(DATA_DIR, 'agendamentos.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 
-try {
-  await sequelize.authenticate();
-  // sincroniza modelos com o banco (aplica alterações necessárias nas tabelas existentes)
-  await sequelize.sync({ alter: true });
-  db = sequelize;
-  console.log('Conectado ao banco via Sequelize! (sync alter aplicado)');
-} catch (err) {
-  console.error('Erro ao conectar via Sequelize:', err.message);
-  console.log('Usando fallback para armazenamento local (JSON).');
-  db = null;
-  // garante que diretório e arquivo existam
+if (sequelize) {
   try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    try { await fs.access(REVIEWS_FILE); } catch { await fs.writeFile(REVIEWS_FILE, '[]', 'utf8'); }
-    try { await fs.access(AGENDAMENTOS_FILE); } catch { await fs.writeFile(AGENDAMENTOS_FILE, '[]', 'utf8'); }
-    try { await fs.access(USERS_FILE); } catch { await fs.writeFile(USERS_FILE, '[]', 'utf8'); }
-    console.log('Arquivos de dados locais preparados em', DATA_DIR);
-  } catch (err2) {
-    console.error('Erro ao preparar armazenamento local:', err2.message);
+    await sequelize.authenticate();
+    // sincroniza modelos com o banco (aplica alterações necessárias nas tabelas existentes)
+    await sequelize.sync({ alter: true });
+    db = sequelize;
+    console.log('Conectado ao banco via Sequelize! (sync alter aplicado)');
+  } catch (err) {
+    console.error('Erro ao conectar via Sequelize:', err.message);
+    console.log('Usando fallback para armazenamento local (JSON).');
+    db = null;
   }
+} else {
+  console.log('DATABASE_URL não definido, usando fallback para armazenamento local (JSON).');
+  db = null;
+}
+
+// garante que diretório e arquivo existam para fallback
+try {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  try { await fs.access(REVIEWS_FILE); } catch { await fs.writeFile(REVIEWS_FILE, '[]', 'utf8'); }
+  try { await fs.access(AGENDAMENTOS_FILE); } catch { await fs.writeFile(AGENDAMENTOS_FILE, '[]', 'utf8'); }
+  try { await fs.access(USERS_FILE); } catch { await fs.writeFile(USERS_FILE, '[]', 'utf8'); }
+  console.log('Arquivos de dados locais preparados em', DATA_DIR);
+} catch (err2) {
+  console.error('Erro ao preparar armazenamento local:', err2.message);
 }
 
 // ----------- Rotas API -----------
