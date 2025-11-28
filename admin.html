@@ -60,18 +60,7 @@
   </main>
 
   <script>
-    // Verificar autenticação do admin ao carregar
-    window.addEventListener('DOMContentLoaded', () => {
-      const usuarioId = localStorage.getItem('userId') || sessionStorage.getItem('usuarioId');
-      
-      if (!usuarioId) {
-        document.body.innerHTML = '<div style="text-align:center; padding: 50px; color: #fff; font-size: 1.2rem;"><p>Acesso negado.</p><p>Você precisa estar <a href="cartaofidelidade.html" style="color: #ffbd59;">logado</a> para acessar a administração.</p></div>';
-        return;
-      }
-      
-      carregarAgendamentos();
-    });
-
+    
     // Preenche tabela de agendamentos via API e adiciona botões Excluir / Adicionar Pontos
     async function carregarAgendamentos() {
       try {
