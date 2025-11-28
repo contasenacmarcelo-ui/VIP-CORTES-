@@ -1,9 +1,17 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import dotenv from 'dotenv';
 
-const sequelize = new Sequelize('vipcortes', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
+dotenv.config();
+
+const sequelize = new Sequelize(process.env.DATABASE_URL || 'sqlite::memory:', {
+  dialect: process.env.DATABASE_URL ? 'postgres' : 'sqlite',
   logging: false,
+  dialectOptions: process.env.DATABASE_URL ? {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  } : {},
 });
 
 const Usuario = sequelize.define('Usuario', {
