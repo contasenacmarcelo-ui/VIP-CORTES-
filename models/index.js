@@ -1,11 +1,16 @@
 import { Sequelize, DataTypes } from 'sequelize';
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL,
+  process.env.DB_NAME,
+  process.env.DB_HOST,
+  process.env.DB_USER,
+  process.env.DB_PASS, {
   dialect: 'postgres',
   logging: false,
+  port: process.env.DB_PORT,
   dialectOptions: {
     ssl: {
       require: true,
