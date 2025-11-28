@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 import fs from 'fs/promises';
 
 const app = express();
-const PORT = 10000;
+const PORT = process.env.PORT;
 
 // ----------- Middleware -----------
 app.use(cors());
