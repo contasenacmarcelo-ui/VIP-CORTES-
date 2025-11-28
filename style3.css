@@ -347,6 +347,22 @@ input::placeholder {
   background-color: #e0a143;
 }
 
+.warning-exclusion{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  height: auto;
+  color: #ffffff;
+  font-size: 18px;
+  background-color: rgba(240, 248, 255, 0);
+  justify-content: center;
+  z-index: 2;
+  font-family: "Big Shoulders", sans-serif;
+  gap: 5px;
+}
+
 
 
 

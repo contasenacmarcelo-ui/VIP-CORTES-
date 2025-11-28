@@ -52,20 +52,26 @@ function starSvg(filled) {
     }
 
     try {
-      await apiRequest('/agendamentos', {
+
+      // 🔥 FAZ O POST E CAPTURA A RESPOSTA
+      const res = await apiRequest('/agendamentos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+
+      // 🔥 SALVA O ID RETORNADO — É AQUI QUE FICA O #1
+      localStorage.setItem('agendamento_id', res.id);
+
+      // vai para AGENDAR2
       window.location.href = 'AGENDAR2.html';
+
     } catch (err) {
       console.error(err);
       alert('Erro ao enviar agendamento: ' + err.message);
     }
   });
-
 })();
-
 // ------------------ ADMINISTRAÇÃO ------------------
 (function setupAdmin() {
   // só executa se estiver na admin.html
@@ -323,4 +329,23 @@ stars.forEach(star => {
       lastClickedIndex = index; // atualiza o índice da última estrela clicada
     }
   });
+});
+
+//------------------- CANCELAR AGENDAMENTO ------------------    
+document.getElementById('btnCancelar').addEventListener('click', async () => {
+  const id = localStorage.getItem('agendamento_id');
+
+  if (!id) {
+    alert("Nenhum agendamento encontrado.");
+    return;
+  }
+
+  const res = await apiRequest(`/agendamentos/${id}`, {
+    method: 'DELETE'
+  });
+
+  alert("Agendamento cancelado com sucesso.");
+
+  // limpa para garantir que não cancele mais nada depois
+  localStorage.removeItem('agendamento_id');
 });
