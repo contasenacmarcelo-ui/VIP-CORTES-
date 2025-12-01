@@ -21,7 +21,7 @@ app.use(express.static(path.join(_dirname, 'index')));
 
 // Página inicial
 app.get('/', (req, res) => {
-  res.sendFile(path.join(_dirname, 'publico', 'index.html'));
+  res.sendFile(path.join(_dirname, 'index.html'));
 });
 
 
