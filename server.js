@@ -16,8 +16,14 @@ app.use(express.urlencoded({ extended: true }));
 
 const _dirname = path.resolve();
 
-// Servir arquivos estáticos diretamente da raiz do projeto
-app.use(express.static(_dirname));
+// Servir corretamente os arquivos estáticos da pasta "publico"
+app.use(express.static(path.join(_dirname, 'index')));
+
+// Página inicial
+app.get('/', (req, res) => {
+  res.sendFile(path.join(_dirname, 'publico', 'index.html'));
+});
+
 
 // Rota amigável: /Pagina -> serve Pagina.html (ignora rotas que comecem com /api)
 app.get('/:page', async (req, res, next) => {
