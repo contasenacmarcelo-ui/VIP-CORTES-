@@ -144,7 +144,7 @@ function starSvg(filled) {
 
   const PAGINATION_WRAPPER_ID = 'reviews-pagination';
   let currentPage = 1;
-  const PAGE_SIZE = 9; // exibir 9 avaliações por página (3 colunas x 3 linhas)
+  const PAGE_SIZE = window.innerWidth < 768 ? 2 : 9;; // exibir 9 avaliações por página (3 colunas x 3 linhas)
 
   async function carregarAvaliacoes() {
     try {
