@@ -17,7 +17,13 @@ app.use(express.urlencoded({ extended: true }));
 const _dirname = path.resolve();
 
 // Servir corretamente os arquivos estáticos da pasta "publico"
-app.use(express.static(path.join(_dirname, 'index')));
+app.use(express.static(path.join(_dirname)));
+
+// Página inicial
+app.get('/', (req, res) => {
+  res.sendFile(path.join(_dirname, 'index.html'));
+});
+
 
 // Rota amigável: /Pagina -> serve Pagina.html (ignora rotas que comecem com /api)
 app.get('/:page', async (req, res, next) => {
@@ -358,10 +364,7 @@ app.post('/api/fidelities/adjust', async (req, res) => {
   }
 });
 
-// Servir frontend
-app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: '.' });
-});
+
 
 // Iniciar servidor
 app.listen(PORT, () => {
