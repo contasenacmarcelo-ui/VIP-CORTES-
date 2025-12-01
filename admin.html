@@ -78,17 +78,7 @@
           const horaTd = document.createElement('td'); horaTd.textContent = a.hora || a.time || '';
           const actionTd = document.createElement('td');
 
-          const delBtn = document.createElement('button'); delBtn.className = 'btn-excluir'; delBtn.textContent = 'Excluir';
-          delBtn.addEventListener('click', async () => {
-            if (!confirm('Excluir este agendamento?')) return;
-            await fetch(`/api/agendamentos/${a.id}`, { method: 'DELETE' });
-            carregarAgendamentos();
-          });
-
-          const remarcarBtn = document.createElement('button'); remarcarBtn.className = 'btn-remarcar'; remarcarBtn.textContent = 'Remarcar';
-          remarcarBtn.addEventListener('click', () => {
-            window.location.href = './AGENDAR.html';
-          });
+         
 
           const cancelarBtn = document.createElement('button'); cancelarBtn.className = 'btn-cancelar'; cancelarBtn.textContent = 'Cancelar';
           cancelarBtn.addEventListener('click', async () => {

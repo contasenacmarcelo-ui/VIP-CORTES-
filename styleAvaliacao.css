@@ -299,9 +299,7 @@
     .body-ava{
         overflow: visible;
     }
-    .barber_background-ava{
-        display:none;
-    }
+    
     .avalienos{
         margin-left: 26%;
         width: 200px;
@@ -319,12 +317,7 @@
     }
 }
 @media (min-width:501px) and (max-width: 800px){
-    .barber_background-ava{
-        display:none;
-    }
-    .body-ava{
-        overflow: visible;
-    }
+    
     .avalienos{
         margin-left: 40%;
     }
@@ -503,7 +496,6 @@
         margin-top: 40px;
     }
 }
-<<<<<<< HEAD
 /* ============================= */
 /*        MENU LATERAL           */
 /* ============================= */
@@ -617,7 +609,7 @@
     }
   
   }  
-=======
+
 
 .rating{
     display: flex;
@@ -673,4 +665,4 @@
 .star-table{ display:inline-flex; gap:8px; justify-content:center; }
 .star-cell{ display:inline-block; width:34px; height:34px; border-radius:6px; background:#111; color:#fff; display:flex; align-items:center; justify-content:center; }
 .star-cell.selected{ background:#f0b65f; color:#111; }
->>>>>>> 89c7750a5278fc7fe82d1430d718a40687933b80
+
