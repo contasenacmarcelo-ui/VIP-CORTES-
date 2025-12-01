@@ -429,14 +429,14 @@
     line-height: 40px; 
 }
 .enviar:hover{
-    background-color: #b98c49;
+    background-color: #e9ab4e;
 }
 .cancelar{
     color: white;
     text-decoration: none;
     font-family: "Big Shoulders", sans-serif;
     font-size: 30px;
-    background-color: #f0b65f;
+    background-color: #e9ab4e;
     width: 150px;
     height: 40px;
     border-radius: 20px;

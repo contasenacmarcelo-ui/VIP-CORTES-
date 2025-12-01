@@ -2441,9 +2441,9 @@ main {
 
 
         .onde {
-            position: absolute;
+            position: relative;
             font-size: 20px;
-            top: 215%;
+            margin-bottom: 5%;
             font-weight: lighter;
             left: 5%;
             color: #f0b65f;
@@ -2457,7 +2457,7 @@ main {
             left: 5%;
             width: 200px;
             color: #ffffff;
-            font-family: "Lora", serif;
+            font-family: "Big Shoulders", sans-serif;
         }
 
         .titcontatos {
@@ -2655,6 +2655,7 @@ main {
     cursor: pointer;
     display: none; /* mobile-only */
   }
+
   
   /* Mostrar o botão apenas no mobile */
   @media (max-width: 1079px) {
