@@ -184,6 +184,75 @@ section {
     font-size: 0.9em;
     width: 90%; 
     max-width: 100px;
+    transition: all 0.3s ease;
+}
+
+.btn-excluir:hover {
+    background-color: #c62828;
+    transform: translateY(-2px);
+}
+
+.btn-remarcar {
+    background-color: #ffbd59;
+    color: #000;
+    border: none;
+    padding: 0.3em 0.6em;
+    cursor: pointer;
+    font-family: "Big Shoulders", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-size: 0.9em;
+    width: 90%;
+    max-width: 100px;
+    transition: all 0.3s ease;
+}
+
+.btn-remarcar:hover {
+    background-color: #ffc980;
+    transform: translateY(-2px);
+}
+
+.btn-cancelar {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.3em 0.6em;
+    cursor: pointer;
+    font-family: "Big Shoulders", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-size: 0.9em;
+    width: 90%;
+    max-width: 100px;
+    transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: #e20b00;
+    transform: translateY(-2px);
+}
+
+.btn-adicionar {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.3em 0.6em;
+    cursor: pointer;
+    font-family: "Big Shoulders", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-size: 0.9em;
+    width: 90%;
+    max-width: 120px;
+    transition: all 0.3s ease;
+}
+
+.btn-adicionar:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
 }
 
 /* 6. Media Query para Mobile (Menor que 950px) */

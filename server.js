@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 import fs from 'fs/promises';
 
 const app = express();
-const PORT = 10000;
+const PORT = process.env.PORT || 3000;
 
 // ----------- Middleware -----------
 app.use(cors());
@@ -17,11 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 const _dirname = path.resolve();
 
 // Servir corretamente os arquivos estáticos da pasta "publico"
-app.use(express.static(path.join(_dirname, 'index')));
+app.use(express.static(path.join(_dirname)));
 
 // Página inicial
 app.get('/', (req, res) => {
-  res.sendFile(path.join(_dirname, 'publico', 'index.html'));
+  res.sendFile(path.join(_dirname, 'index.html'));
 });
 
 
@@ -45,26 +45,32 @@ const REVIEWS_FILE = path.join(DATA_DIR, 'reviews.json');
 const AGENDAMENTOS_FILE = path.join(DATA_DIR, 'agendamentos.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 
-try {
-  await sequelize.authenticate();
-  // sincroniza modelos com o banco (aplica alterações necessárias nas tabelas existentes)
-  await sequelize.sync({ alter: true });
-  db = sequelize;
-  console.log('Conectado ao banco via Sequelize! (sync alter aplicado)');
-} catch (err) {
-  console.error('Erro ao conectar via Sequelize:', err.message);
-  console.log('Usando fallback para armazenamento local (JSON).');
-  db = null;
-  // garante que diretório e arquivo existam
+if (sequelize) {
   try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    try { await fs.access(REVIEWS_FILE); } catch { await fs.writeFile(REVIEWS_FILE, '[]', 'utf8'); }
-    try { await fs.access(AGENDAMENTOS_FILE); } catch { await fs.writeFile(AGENDAMENTOS_FILE, '[]', 'utf8'); }
-    try { await fs.access(USERS_FILE); } catch { await fs.writeFile(USERS_FILE, '[]', 'utf8'); }
-    console.log('Arquivos de dados locais preparados em', DATA_DIR);
-  } catch (err2) {
-    console.error('Erro ao preparar armazenamento local:', err2.message);
+    await sequelize.authenticate();
+    // sincroniza modelos com o banco (aplica alterações necessárias nas tabelas existentes)
+    await sequelize.sync({ alter: true });
+    db = sequelize;
+    console.log('Conectado ao banco via Sequelize! (sync alter aplicado)');
+  } catch (err) {
+    console.error('Erro ao conectar via Sequelize:', err.message);
+    console.log('Usando fallback para armazenamento local (JSON).');
+    db = null;
   }
+} else {
+  console.log('DATABASE_URL não definido, usando fallback para armazenamento local (JSON).');
+  db = null;
+}
+
+// garante que diretório e arquivo existam para fallback
+try {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  try { await fs.access(REVIEWS_FILE); } catch { await fs.writeFile(REVIEWS_FILE, '[]', 'utf8'); }
+  try { await fs.access(AGENDAMENTOS_FILE); } catch { await fs.writeFile(AGENDAMENTOS_FILE, '[]', 'utf8'); }
+  try { await fs.access(USERS_FILE); } catch { await fs.writeFile(USERS_FILE, '[]', 'utf8'); }
+  console.log('Arquivos de dados locais preparados em', DATA_DIR);
+} catch (err2) {
+  console.error('Erro ao preparar armazenamento local:', err2.message);
 }
 
 // ----------- Rotas API -----------
@@ -151,16 +157,9 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/agendamentos', async (req, res) => {
   try {
     const { name, age, phone, service, date, time, observacoes } = req.body;
+
     if (db) {
-      await Agendamento.create({ name, age: age || null, phone: phone || '', service: service || '', data_agendamento: date || null, hora: time || null, observacoes: observacoes || null });
-      res.json({ message: 'Agendamento criado com sucesso' });
-    } else {
-      // fallback para arquivo JSON
-      const fileContent = await fs.readFile(AGENDAMENTOS_FILE, 'utf8');
-      const arr = JSON.parse(fileContent || '[]');
-      const maxId = arr.reduce((m, a) => (a.id && a.id > m ? a.id : m), 0);
-      const newItem = {
-        id: maxId + 1,
+      const novo = await Agendamento.create({
         name,
         age: age || null,
         phone: phone || '',
@@ -168,11 +167,32 @@ app.post('/api/agendamentos', async (req, res) => {
         data_agendamento: date || null,
         hora: time || null,
         observacoes: observacoes || null
-      };
-      arr.push(newItem);
-      await fs.writeFile(AGENDAMENTOS_FILE, JSON.stringify(arr, null, 2), 'utf8');
-      res.json({ message: 'Agendamento criado (armazenamento local)' });
+      });
+
+      return res.json({ id: novo.id });
     }
+
+    // fallback para arquivo JSON
+    const fileContent = await fs.readFile(AGENDAMENTOS_FILE, 'utf8');
+    const arr = JSON.parse(fileContent || '[]');
+    const maxId = arr.reduce((m, a) => (a.id && a.id > m ? a.id : m), 0);
+
+    const newItem = {
+      id: maxId + 1,
+      name,
+      age: age || null,
+      phone: phone || '',
+      service: service || '',
+      data_agendamento: date || null,
+      hora: time || null,
+      observacoes: observacoes || null
+    };
+
+    arr.push(newItem);
+    await fs.writeFile(AGENDAMENTOS_FILE, JSON.stringify(arr, null, 2), 'utf8');
+
+    return res.json({ id: newItem.id });
+
   } catch (err) {
     console.error('Erro ao criar agendamento:', err);
     res.status(500).json({ error: 'Erro ao criar agendamento' });
@@ -344,10 +364,7 @@ app.post('/api/fidelities/adjust', async (req, res) => {
   }
 });
 
-// Servir frontend
-app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: '.' });
-});
+
 
 // Iniciar servidor
 app.listen(PORT, () => {
