@@ -28,10 +28,10 @@
       </nav>
       <nav class="margem-direita">
       
-<<<<<<< HEAD
+
       </nav>
-=======
->>>>>>> e8c2df11c186e41e882cbb8e42d797067bb9e194
+
+
     </div>
   </header>
   <main>
@@ -81,8 +81,6 @@
           const horaTd = document.createElement('td'); horaTd.textContent = a.hora || a.time || '';
           const actionTd = document.createElement('td');
 
-         
-
           const cancelarBtn = document.createElement('button'); cancelarBtn.className = 'btn-cancelar'; cancelarBtn.textContent = 'Cancelar';
           cancelarBtn.addEventListener('click', async () => {
             if (!confirm(`Cancelar agendamento de ${a.name || 'Cliente'} ?`)) return;
@@ -95,14 +93,7 @@
             }
           });
 
-         
-
-          actionTd.appendChild(delBtn);
-          actionTd.appendChild(document.createTextNode(' '));
-          actionTd.appendChild(remarcarBtn);
-          actionTd.appendChild(document.createTextNode(' '));
           actionTd.appendChild(cancelarBtn);
-          actionTd.appendChild(document.createTextNode(' '));
           
 
           tr.appendChild(clienteTd);

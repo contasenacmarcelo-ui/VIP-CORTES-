@@ -264,7 +264,7 @@ input::placeholder {
   font-size: 60px;
   background-color: rgba(240, 248, 255, 0);
   justify-content: center;
-  z-index: 1;
+  z-index: 1; 
   padding-top: 150px;
   font-family: "Big Shoulders", sans-serif;
   padding-bottom: 6%;
