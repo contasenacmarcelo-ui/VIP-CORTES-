@@ -52,13 +52,16 @@ body {
     align-items: center;
 }
 
+
 .entrar2 {
     color: #f0b65f;
     font-size: 35px;
+    font-weight: 500;
     gap: 28px;
     text-decoration: none;
     font-family: "Big Shoulders", sans-serif;
     align-items: center;
+
 }
 
 .logo {
