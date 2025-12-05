@@ -8,14 +8,12 @@
 .perfil {
     background-color: #d6b8b800;
     border-radius: 40px;
-   }
-   
-   .perfil:hover {
-     color: #f0b65f;
-     transform: translatey(-9px);
-     transition: 0.2s;
-   }
-   
+}
+.perfil:hover {
+    color: #f0b65f;
+    transform: translatey(-9px);
+    transition: 0.2s;
+}
 
 /* --- ESTILOS DO CABEÇALHO --- */
 .container{
@@ -33,11 +31,10 @@
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 1;
-    /* LINHA BRANCA (solicitado anteriormente) */
+    z-index: 999;
     border-bottom: 3px solid white;
 }
- 
+
 .item, .entrar{
     color: white;
     font-size: 35px;
@@ -46,7 +43,7 @@
     font-family: "Big Shoulders", sans-serif;
     align-items: center;
 }
- 
+
 .entrar2{
     color: #f0b65f;
     font-size: 35px;
@@ -55,13 +52,13 @@
     font-family: "Big Shoulders", sans-serif;
     align-items: center;
 }
- 
+
 .logo{
     height: 90px;
     width: 150px;
     align-items: center;
 }
- 
+
 .container_left{
     display: flex;
     justify-content: space-between;
@@ -72,7 +69,7 @@
     align-items: center;
     padding: 0px 1%;
 }
- 
+
 .container_right{
     display: flex;
     justify-content: space-between;
@@ -83,11 +80,11 @@
     align-items: center;
     padding: 0px 2%;
 }
- 
+
 .item:hover,.entrar:hover,.entrar2:hover{
     transform: scale(1.2);
 }
-        
+
 .menu-icon {
     background-color: rgba(0, 0, 0, 0);
     border: none;
@@ -95,34 +92,28 @@
     cursor: pointer;
     padding: 0px 2%;
 }
- 
+
 .menu-icon img{
     height: 50px;
     width: 50px;
 }
- 
+
 @media (max-width: 1079px) {
-    .item,.entrar,.entrar2 {
-        display: none;
-    }
-    .menu-icon {
-        justify-content: center;
-        align-items: center;
-        display: flex;
-    }
+    .item,.entrar,.entrar2 { display: none; }
+    .menu-icon { justify-content: center; align-items: center; display: flex; }
 
     .container {
-        justify-content: flex-end; /* empurra tudo para a direita */
-        padding-right: 10px; /* afasta um pouco da borda */
-      }
-    
-      .logo {
-        margin-left: auto; /* agora funciona */
-      }
-    
+        justify-content: flex-end;
+        padding-right: 10px;
+    }
+
+    .logo {
+        margin-left: auto;
+    }
 }
 
 /* --- ESTILOS DA PÁGINA DE AVALIAÇÕES --- */
+
 .body-ava{
     
     background-color: black;
@@ -136,7 +127,7 @@
     position: relative;
     background: url("assets/fundo avaliações.png") no-repeat center/cover;
 }
-    
+
 .barber_background-ava::after {
     content: "";
     position: absolute;
@@ -147,7 +138,7 @@
     background: linear-gradient(to bottom, rgba(0,0,0,0.8)30%, transparent);
     pointer-events: none;
 }
-    
+
 .avalic {
     justify-content: center;
     display:flex ;
@@ -159,21 +150,20 @@
     height: 90px;
     font-family: "Big Shoulders", sans-serif;
     font-size: 70px;
-    position: relative; 
+    position: relative;
 }
 
-/* LINHA LARANJA (#f0b65f) (solicitado anteriormente) */
 .avalic::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 40%; 
+    width: 40%;
     height: 3px;
     background-color: #f0b65f;
 }
-    
+
 .avalienos{
     font-family: "Big Shoulders", sans-serif;
     font-size: 50px;
@@ -181,7 +171,7 @@
     color: rgb(255, 255, 255);
     display: flex;
     width: 10%;
-    margin-left: 89%;
+    margin-left: 45%;
     background-color: #f0b65f;
     justify-content: center;
     border-radius: 25px;
@@ -191,41 +181,59 @@
     background-color: #d19a46;
 }
 
-/* --- ESTILOS DAS AVALIAÇÕES INDIVIDUAIS (CORRIGIDO ALINHAMENTO) --- */
-
-/* Avaliações: mostrar vários cards lado a lado e alinhar conteúdo internamente */
+/* --- CARDS DE AVALIAÇÃO – GRID RESPONSIVO DE VERDADE --- */
 .containerava {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* DESKTOP */
     gap: 24px;
     justify-items: center;
     align-items: start;
     padding: 30px 20px 20px 20px;
     position: relative;
-    z-index: 2; /* garantir que os cards fiquem acima do overlay */
+    z-index: 2;
 }
+
+/* 2 colunas – tablets */
+@media (max-width: 1000px) {
+    .containerava {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .avalienos{
+    width: 34%;
+    margin-left: 33.5%;}
+}
+
+/* 1 coluna – celulares */
+@media (max-width: 700px) {
+    .containerava {
+        grid-template-columns: 1fr;
+    }
+}
+
 .coluns {
     display: flex;
-    flex-direction: row; /* foto+nome à esquerda, comentário à direita */
+    flex-direction: row;
     align-items: flex-start;
     background: rgba(255,255,255,0.02);
     padding: 15px;
     border-radius: 16px;
     gap: 20px;
-    width: 100%; /* ocupar a coluna inteira */
+    width: 100%;
     max-width: 720px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.5);
     position: relative;
-    z-index: 3; /* acima do overlay */
+    z-index: 3;
 }
 
 .pefilava{
     display: flex;
-    flex-direction: column; /* imagem em cima, nome abaixo */
+    flex-direction: column;
     align-items: center;
-    width: 120px; /* largura reservada para a coluna esquerda */
+    width: 120px;
     gap: 8px;
 }
+
 .perfilava-foto{
     width: 80px;
     height: 80px;
@@ -246,9 +254,9 @@
 
 .avali{
     pointer-events: none;
-    color: #111; /* texto escuro sobre fundo amarelo */
+    color: #111;
     background-color: #f0b65f;
-    flex: 1; /* ocupa o restante do espaço do card */
+    flex: 1;
     min-height: 110px;
     border-radius: 14px;
     padding: 18px;
@@ -257,7 +265,7 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
-/* Para telas pequenas, empilhar internamente (foto em cima, comentário abaixo) */
+/* MOBILE – card empilhado */
 @media (max-width: 700px) {
     .coluns {
         flex-direction: column;
@@ -270,9 +278,13 @@
         justify-content: flex-start;
         gap: 12px;
     }
-    .nome{ text-align: left; }
+    .nome{
+        text-align: left;
+    }
 }
 
+/*<<<<<<< HEAD*/
+/* (Restante do seu código continua igual) */
 /* --- MEDIA QUERIES (Mantidos) --- */
 
 .coluns2{
@@ -340,6 +352,7 @@
         width: 270px;
     }
 }
+
 
 /* --- ESTILOS DA PÁGINA DE AVALIAÇÃO (AVALIENOS.HTML) --- */
 .body-ava2{
@@ -429,14 +442,14 @@
     line-height: 40px; 
 }
 .enviar:hover{
-    background-color: #b98c49;
+    background-color: #e9ab4e;
 }
 .cancelar{
     color: white;
     text-decoration: none;
     font-family: "Big Shoulders", sans-serif;
     font-size: 30px;
-    background-color: #f0b65f;
+    background-color: #e9ab4e;
     width: 150px;
     height: 40px;
     border-radius: 20px;
@@ -501,6 +514,10 @@
         display: none;
     }
 }
+/* <<<<<<< HEAD */
+/* <<<<<<< HEAD >>>>>>>*/
+
+
 /* ============================= */
 /*        MENU LATERAL           */
 /* ============================= */

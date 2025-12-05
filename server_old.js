@@ -37,6 +37,7 @@ let db = null;
 const DATA_DIR = path.resolve('.', 'data');
 const REVIEWS_FILE = path.join(DATA_DIR, 'reviews.json');
 const AGENDAMENTOS_FILE = path.join(DATA_DIR, 'agendamentos.json');
+const USUARIOS_FILE = path.join(DATA_DIR, 'users.json');
 
 
 try {
@@ -145,10 +146,10 @@ app.post('/api/usuarios/login', async (req, res) => {
   }
 });
 
-// Criar agendamento (vinculado a usuário se fornecido usuario_id)
-app.post('/api/agendamentos', async (req, res) => {
+// Listar agendamentos
+app.get('/api/agendamentos', async (req, res) => {
   try {
-    const { name, age, phone, service, date, time, observacoes, usuario_id } = req.body;
+    const { usuario_id } = req.query;
     if (db) {
 
       let query = 'SELECT * FROM agendamentos';
@@ -182,6 +183,52 @@ app.post('/api/agendamentos', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro ao listar agendamentos' });
+  }
+});
+
+// Criar agendamento
+app.post('/api/agendamentos', async (req, res) => {
+  try {
+    const { name, age, phone, service, date, time, observacoes } = req.body;
+
+    if (db) {
+      const novo = await Agendamento.create({
+        name,
+        age: age || null,
+        phone: phone || '',
+        service: service || '',
+        data_agendamento: date || null,
+        hora: time || null,
+        observacoes: observacoes || null
+      });
+
+      return res.json({ id: novo.id });
+    }
+
+    // fallback para arquivo JSON
+    const fileContent = await fs.readFile(AGENDAMENTOS_FILE, 'utf8');
+    const arr = JSON.parse(fileContent || '[]');
+    const maxId = arr.reduce((m, a) => (a.id && a.id > m ? a.id : m), 0);
+
+    const newItem = {
+      id: maxId + 1,
+      name,
+      age: age || null,
+      phone: phone || '',
+      service: service || '',
+      data_agendamento: date || null,
+      hora: time || null,
+      observacoes: observacoes || null
+    };
+
+    arr.push(newItem);
+    await fs.writeFile(AGENDAMENTOS_FILE, JSON.stringify(arr, null, 2), 'utf8');
+
+    return res.json({ id: newItem.id });
+
+  } catch (err) {
+    console.error('Erro ao criar agendamento:', err);
+    res.status(500).json({ error: 'Erro ao criar agendamento' });
   }
 });
 
