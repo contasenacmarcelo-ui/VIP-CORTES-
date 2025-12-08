@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>- Vip Cortes -</title>
+    <link rel="stylesheet" href="styleAvaliacao.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body class="body-ava">
+    <header class="container">
+        
+        <section class="container_left">
+            <img src="./assets/Vip cortes logo.png" alt="Logo Vip Cortes" class="logo">
+            <a href="index.html" class="item"><b>Home</b></a>
+            <a href="AGENDAR.html" class="item"><b>Booking</b></a>
+            <a href="Avaliações.html" class="item"><b>Reviews</b></a>
+        </section>
+        <section class="container_right">
+       
+        </section>
+        <button id="btnHamb" class="menu-icon" aria-label="Abrir menu">
+            <img src="./assets/menu (sidebar).png" alt="">
+          </button>
+              </header>
+         
+              
+          
+                                     
+
+
+
+
+              
+          
+          <!-- Backdrop (para fechar ao clicar fora) -->
+          <div id="backdrop" class="backdrop-menu"></div>
+          
+          <!-- Menu Lateral -->
+          <aside id="sideMenu" class="side-menu">
+          
+            <div class="top-menu-row">
+                <h3>Menu</h3>
+                <button class="close-x" id="btnClose">×</button>
+            </div>
+          
+            <nav class="menu-items">
+                <a href="index.html">Home</a>
+                <a href="AGENDAR.html">Agendar</a>
+                <a href="Avaliações.html">TO REVIEW</a>
+            </nav>
+          
+          </aside>
+        
+        
+        
+    <main>
+        <section class="fundo-ava">
+            <div>
+                <h1 class="avalic">Reviews </h1>
+                <a href="avalienos.html" class="avalienos">TO REVIEW</a>
+        </div>
+            <div class="barber_background-ava">
+                <!-- containerava será preenchido dinamicamente por main.js através da API /api/reviews -->
+                <div class="containerava">
+                    <!-- Carregando avaliações... -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const btn = document.getElementById("btnHamb");
+        const side = document.getElementById("sideMenu");
+        const closeBtn = document.getElementById("btnClose");
+        const backdrop = document.getElementById("backdrop");
+      
+        function abrirMenu() {
+          side.classList.add("open");
+          backdrop.classList.add("show");
+        }
+      
+        function fecharMenu() {
+          side.classList.remove("open");
+          backdrop.classList.remove("show");
+        }
+      
+        btn.addEventListener("click", abrirMenu);
+        closeBtn.addEventListener("click", fecharMenu);
+        backdrop.addEventListener("click", fecharMenu);
+      </script>
+  
+  
+    <script src="main.js" defer></script>
+</body>
+</html>
