@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vip Cortes</title>
+  <link rel="stylesheet" href="style2(admin).css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+
+<body>
+  <header>
+    <div class="imagem">
+      <a class="logo-vipcortes" href="indexIngles.html"><img src="./assets/Vip cortes logo.png" alt=""></a>
+
+    </div>
+    <div class="nav-main">
+      <nav class="margem-esquerda">
+        <a class="item" href="indexIngles.html"><b>Home</b></a>
+      <a class="item" href="AvaliaçõesIngles.html"><b>Reviews</b></a>
+      <a class="item" href="AGENDAREngles.html"><b>Booking</b></a>
+      <a class="item22" href="adminIngles.html"><b>admin</b></a>
+      </nav>
+      <nav class="margem-direita">
+      
+
+      </nav>
+
+
+    </div>
+  </header>
+  <main>
+    <section>
+      <div class="line-branca-one"></div>
+      <div class="line-branca-two"></div>
+      <div class="title-admin">ADMINISTRATION</div>
+    </section>
+    <!-- tabela -->
+    <div class="tabela-container">
+      <table class="agenda">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Phone</th>
+            <th>Service</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="agendaBody">
+          <!-- linhas serão preenchidas via JS -->
+        </tbody>
+      </table>
+    </div>
+
+
+  </main>
+  
+  
+  <script>
+    
+    // Preenche tabela de agendamentos via API e adiciona botões Excluir / Adicionar Pontos
+    async function carregarAgendamentos() {
+      try {
+        const res = await fetch('/api/agendamentos');
+        const j = await res.json();
+        const rows = j.appointments || [];
+        const tbody = document.getElementById('agendaBody');
+        tbody.innerHTML = '';
+        for (const a of rows) {
+          const tr = document.createElement('tr');
+          const clienteTd = document.createElement('td'); clienteTd.textContent = a.name || '';
+          const telefoneTd = document.createElement('td'); telefoneTd.textContent = a.phone || '';
+          const servTd = document.createElement('td'); servTd.textContent = a.service || '';
+          const dataTd = document.createElement('td'); dataTd.textContent = a.data_agendamento || a.date || '';
+          const horaTd = document.createElement('td'); horaTd.textContent = a.hora || a.time || '';
+          const actionTd = document.createElement('td');
+
+          const cancelarBtn = document.createElement('button'); cancelarBtn.className = 'btn-cancelar'; cancelarBtn.textContent = 'Cancel';
+          cancelarBtn.addEventListener('click', async () => {
+            if (!confirm(`Cancel appointment for ${a.name || 'Client'} ?`)) return;
+            const r = await fetch(`/api/agendamentos/${a.id}`, { method: 'DELETE' });
+            if (r.ok) {
+              alert('Appointment canceled successfully');
+              carregarAgendamentos();
+            } else {
+              alert('Error canceling appointment');
+            }
+          });
+
+          actionTd.appendChild(cancelarBtn);
+          
+
+          tr.appendChild(clienteTd);
+          tr.appendChild(telefoneTd);
+          tr.appendChild(servTd);
+          tr.appendChild(dataTd);
+          tr.appendChild(horaTd);
+          tr.appendChild(actionTd);
+          tbody.appendChild(tr);
+        }
+      } catch (err) {
+        console.error('Error loading appointments:', err);
+      }
+    }
+
+    // Chamar a função ao carregar a página
+    carregarAgendamentos();
+  </script>
+</body>
+
+</html>

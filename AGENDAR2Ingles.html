@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamento - Vip Cortes</title>
+    <title>Booking - Vip Cortes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap" rel="stylesheet">
@@ -17,93 +17,61 @@
 </head>
 <body class="body2">
     <header class="container">
-        
+
         <section class="container_left">
-            <img src="./assets/Vip cortes logo.png" alt="Logo Vip Cortes" class="logo">
-            <a href="index.html" class="item"><b>Home</b></a>
-            <a href="AGENDAR.html" class="agendar"><b>Agendar</b></a>
-            <a href="Avaliações.html" class="item"><b>Avaliações</b></a>
+            <img src="./assets/Vip cortes logo.png" alt="Vip Cortes Logo" class="logo">
+            <a href="indexIngles.html" class="item"><b>Home</b></a>
+            <a href="AGENDAREngles.html" class="agendar"><b>Booking</b></a>
+            <a href="AvaliaçõesIngles.html" class="item"><b>Reviews</b></a>
         </section>
         <section class="container_right">
-        
+
         </section>
-        
-        <button id="btnHamb" class="menu-icon" aria-label="Abrir menu">
+
+        <button id="btnHamb" class="menu-icon" aria-label="Open menu">
             <img src="./assets/menu (sidebar).png" alt="">
-        </button>
+          </button>
     </header>
 
 
     <div id="backdrop" class="backdrop-menu"></div>
-    
+
     <aside id="sideMenu" class="side-menu">
         <div class="top-menu-row">
             <h3>Menu</h3>
             <button class="close-x" id="btnClose">×</button>
         </div>
-    
+
         <nav class="menu-items">
-            <a href="index.html">Home</a>
-            <a href="AGENDAR.html">Agendar</a>
-            <a href="Avaliações.html">Avaliar</a>
+            <a href="indexIngles.html">Home</a>
+            <a href="AGENDAREngles.html">Book</a>
+            <a href="AvaliaçõesIngles.html">Rate</a>
         </nav>
-    
+
         <div class="profile-box">
-            <a href="cartaofidelidade.html" class="perfil"><img src="./assets/perfil.png" alt="Foto de perfil"></a>
+            <a href="cartaofidelidade.html" class="perfil"><img src="./assets/perfil.png" alt="Profile picture"></a>
         </div>
     </aside>
 
-      
-  
-      
-  
-  <!-- Backdrop (para fechar ao clicar fora) -->
-  <div id="backdrop" class="backdrop-menu"></div>
-  
-  <!-- Menu Lateral -->
-  <aside id="sideMenu" class="side-menu">
-  
-    <div class="top-menu-row">
-        <h3>Menu</h3>
-        <button class="close-x" id="btnClose">×</button>
-    </div>
-  
-    <nav class="menu-items">
-        <a href="index.html">Home</a>
-        <a href="AGENDAR.html">Agendar</a>
-        <a href="Avaliações.html">Avaliar</a>
-        <a href="admin.html">Admin</a>
-    </nav>
-  
-  </aside>
->>>>>>> e8c2df11c186e41e882cbb8e42d797067bb9e194
-  
+
+
     <main class="main2">
-        <h1><b>Pronto!</b></h1>
-        <p class="p1">Agendamento <span class="destaque">concluído e enviado,</span> esperamos por você em breve!</p>
-        <span class="warning-exclusion">Em caso de mais de um agendamento feito, a exclusao de um agendamento só excluira todos.</span>
+        <h1><b>Done!</b></h1>
+        <p class="p1">Appointment <span class="destaque">scheduled and sent,</span> we look forward to seeing you soon!</p>
+        <span class="warning-exclusion">In case of more than one appointment made, canceling one will cancel all.</span>
 
         <section class="botoes-2">
-            <a href="index.html" class="a-voltarhome">
-                <button class="voltar-pra-home"><b class="b-voltarhome">VOLTAR PARA HOME</b></button>
+            <a href="indexIngles.html" class="a-voltarhome">
+                <button class="voltar-pra-home"><b class="b-voltarhome">BACK TO HOME</b></button>
             </a>
 
             <!-- Botão de cancelar limpo e correto -->
             <button class="cancelar" id="btnCancelar">
-                <b class="b-cancelar">CANCELAR SERVIÇO</b>
+                <b class="b-cancelar">CANCEL SERVICE</b>
             </button>
         </section>
-        
-<<<<<<< HEAD
-        <p class="atencao-agendamento">
-            <b>
-                Atenção: em caso de ausência na data e horário previstos sem aviso ou cancelamento prévio 
-                (no mínimo 4 dias antes), será cobrada uma taxa de 20% do valor do serviço.
-            </b>
-        </p>
-=======
-         <p class="atencao-agendamento"><strong>ATENÇÃO: </strong>EM CASO DE AUSÊNCIA NA DATA E HORÁRIO PREVISTOS SEM HAVER CANCELAMENTO PRÉVIO (MÍNIMO DE 4 DIAS ANTES), SERÁ COBRADA UMA TAXA DE 20% DO VALOR DO SERVIÇO.</p>
->>>>>>> e8c2df11c186e41e882cbb8e42d797067bb9e194
+
+         <p class="atencao-agendamento"><strong>ATTENTION: </strong>IN CASE OF ABSENCE ON THE SCHEDULED DATE AND TIME WITHOUT PRIOR NOTICE OR CANCELLATION (MINIMUM OF 4 DAYS IN ADVANCE), A 20% FEE OF THE SERVICE VALUE WILL BE CHARGED.</p>
     </main>
 
     <script>
@@ -111,22 +79,22 @@
         const side = document.getElementById("sideMenu");
         const closeBtn = document.getElementById("btnClose");
         const backdrop = document.getElementById("backdrop");
-      
+
         function abrirMenu() {
             side.classList.add("open");
             backdrop.classList.add("show");
         }
-      
+
         function fecharMenu() {
             side.classList.remove("open");
             backdrop.classList.remove("show");
         }
-      
+
         btn.addEventListener("click", abrirMenu);
         closeBtn.addEventListener("click", fecharMenu);
         backdrop.addEventListener("click", fecharMenu);
     </script>
-  
+
     <script src="main.js"></script>
 
     <!-- 🔥 SCRIPT QUE FAZ O CANCELAMENTO COM 100% DE CERTEZA -->
@@ -139,7 +107,7 @@
         if (btnCancelar) {
             btnCancelar.addEventListener('click', async () => {
                 if (!id) {
-                    alert("Nenhum agendamento encontrado para cancelar.");
+                    alert("No appointment found to cancel.");
                     return;
                 }
 
@@ -147,11 +115,11 @@
                     method: 'DELETE'
                 });
 
-                alert("Agendamento cancelado com sucesso.");
+                alert("Appointment canceled successfully.");
 
                 localStorage.removeItem('agendamento_id');
 
-                window.location.href = 'index.html';
+                window.location.href = 'indexIngles.html';
             });
         }
     </script>
