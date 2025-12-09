@@ -47,8 +47,12 @@ function starSvg(filled) {
       usuario_id: usuarioId || null
     };
 
+    // Check if we're on an English page
+    const isEnglishPage = window.location.pathname.includes('Ingles') || window.location.pathname.includes('English') ||
+                         document.documentElement.lang === 'en';
+
     if (!payload.name || !payload.service || !payload.date) {
-      return alert('Preencha Nome, Serviço e Data');
+      return alert(isEnglishPage ? 'Please fill in Name, Service and Date' : 'Preencha Nome, Serviço e Data');
     }
 
     try {
@@ -68,7 +72,7 @@ function starSvg(filled) {
 
     } catch (err) {
       console.error(err);
-      alert('Erro ao enviar agendamento: ' + err.message);
+      alert(isEnglishPage ? 'Error sending booking: ' + err.message : 'Erro ao enviar agendamento: ' + err.message);
     }
   });
 })();
@@ -209,7 +213,9 @@ function starSvg(filled) {
       };
 
       // Check if we're on the English reviews page
-      const isEnglishPage = window.location.pathname.includes('AvaliaçõesIngles.html');
+      const isEnglishPage = window.location.pathname.includes('AvaliaçõesIngles.html') ||
+                           document.documentElement.lang === 'en' ||
+                           document.title.toLowerCase().includes('english');
       const prevText = isEnglishPage ? '« Previous' : '« Anterior';
       const nextText = isEnglishPage ? 'Next »' : 'Próximo »';
 
@@ -281,7 +287,7 @@ function starSvg(filled) {
 
     const content = textarea.value.trim();
     if (!content) {
-      alert('Por favor, escreva sua avaliação.');
+      alert(window.location.pathname.toLowerCase().includes('ingles') ? 'Please write your review.' : 'Por favor, escreva sua avaliação.');
       return;
     }
 
@@ -309,7 +315,7 @@ function starSvg(filled) {
       window.location.href = 'Avaliações.html';
     } catch (err) {
       console.error(err);
-      alert('Erro ao enviar avaliação: ' + err.message);
+      alert(window.location.pathname.toLowerCase().includes('ingles') ? 'Error sending review: ' + err.message : 'Erro ao enviar avaliação: ' + err.message);
     }
   });
 })();
@@ -341,7 +347,7 @@ document.getElementById('btnCancelar').addEventListener('click', async () => {
   const id = localStorage.getItem('agendamento_id');
 
   if (!id) {
-    alert("Nenhum agendamento encontrado.");
+    alert(window.location.pathname.toLowerCase().includes('ingles') ? "No booking found." : "Nenhum agendamento encontrado.");
     return;
   }
 
@@ -349,7 +355,7 @@ document.getElementById('btnCancelar').addEventListener('click', async () => {
     method: 'DELETE'
   });
 
-  alert("Agendamento cancelado com sucesso.");
+  alert(window.location.pathname.toLowerCase().includes('ingles') ? "Booking canceled successfully." : "Agendamento cancelado com sucesso.");
 
   // limpa para garantir que não cancele mais nada depois
   localStorage.removeItem('agendamento_id');
