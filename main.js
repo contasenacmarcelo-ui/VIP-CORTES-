@@ -208,7 +208,12 @@ function starSvg(filled) {
         return b;
       };
 
-      pager.appendChild(createButton('« Anterior', currentPage <= 1, () => { currentPage--; carregarAvaliacoes(); }));
+      // Check if we're on the English reviews page
+      const isEnglishPage = window.location.pathname.includes('AvaliaçõesIngles.html');
+      const prevText = isEnglishPage ? '« Previous' : '« Anterior';
+      const nextText = isEnglishPage ? 'Next »' : 'Próximo »';
+
+      pager.appendChild(createButton(prevText, currentPage <= 1, () => { currentPage--; carregarAvaliacoes(); }));
 
       // page numbers (mostrar até 5 números: current ±2)
       const startPage = Math.max(1, currentPage - 2);
@@ -221,7 +226,7 @@ function starSvg(filled) {
         pager.appendChild(btn);
       }
 
-      pager.appendChild(createButton('Próximo »', currentPage >= totalPages, () => { currentPage++; carregarAvaliacoes(); }));
+      pager.appendChild(createButton(nextText, currentPage >= totalPages, () => { currentPage++; carregarAvaliacoes(); }));
     } catch (err) {
       console.error('Erro ao carregar avaliações:', err);
       container.innerHTML = `<div style="text-align:center; color:red;">Erro ao carregar avaliações</div>`;

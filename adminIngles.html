@@ -64,7 +64,17 @@
   
   
   <script>
-    
+
+    // Função para traduzir serviços do português para inglês
+    function traduzirServico(servico) {
+      const traducoes = {
+        'corte-cabelo': 'Haircut',
+        'corte-barba': 'Beard trim',
+        'combo-cabelo-barba': 'Hair + beard combo'
+      };
+      return traducoes[servico] || servico; // Retorna a tradução ou o original se não encontrar
+    }
+
     // Preenche tabela de agendamentos via API e adiciona botões Excluir / Adicionar Pontos
     async function carregarAgendamentos() {
       try {
@@ -77,7 +87,7 @@
           const tr = document.createElement('tr');
           const clienteTd = document.createElement('td'); clienteTd.textContent = a.name || '';
           const telefoneTd = document.createElement('td'); telefoneTd.textContent = a.phone || '';
-          const servTd = document.createElement('td'); servTd.textContent = a.service || '';
+          const servTd = document.createElement('td'); servTd.textContent = traduzirServico(a.service) || '';
           const dataTd = document.createElement('td'); dataTd.textContent = a.data_agendamento || a.date || '';
           const horaTd = document.createElement('td'); horaTd.textContent = a.hora || a.time || '';
           const actionTd = document.createElement('td');
