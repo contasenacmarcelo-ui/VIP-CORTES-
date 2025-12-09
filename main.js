@@ -64,7 +64,7 @@ function starSvg(filled) {
       localStorage.setItem('agendamento_id', res.id);
 
       // vai para AGENDAR2
-      window.location.href = 'AGENDAR2.html';
+      window.location.href = 'AGENDAR2Ingles.html';
 
     } catch (err) {
       console.error(err);
@@ -234,7 +234,7 @@ function starSvg(filled) {
 // ------------------ ENVIAR AVALIAÇÃO ------------------
 (function setupEnviarAvaliacao() {
   // só executa se estiver na avalienos.html
-  if (!window.location.pathname.toLowerCase().includes('avalienos.html')) return;
+  if (!window.location.pathname.toLowerCase().includes('avalienosIngles.html')) return;
 
   const stars = document.querySelectorAll('.star');
   const textarea = document.querySelector('.digiteaqui');
